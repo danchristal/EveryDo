@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) NSMutableArray<ToDo*> *todoList;
 
+
 @end
 
 @implementation ToDoTableViewController
@@ -58,7 +59,10 @@
     [swipeRecognizer setDirection:UISwipeGestureRecognizerDirectionRight];
     [self.tableView addGestureRecognizer:swipeRecognizer];
     swipeRecognizer.delegate = self;
+    
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
+    
     
 }
 - (void)swipeHandler:(UISwipeGestureRecognizer *)sender {
@@ -156,19 +160,29 @@
 }
 
 
-/*
+
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+    
+    if(fromIndexPath.row == toIndexPath.row)
+        return;
+    
+    ToDo *itemToMove = self.todoList[fromIndexPath.row];
+    
+    [self.todoList removeObjectAtIndex:fromIndexPath.row];
+    [self.todoList insertObject:itemToMove atIndex:toIndexPath.row];
+    
+    [self.tableView reloadData];
+    
 }
-*/
 
-/*
+
 // Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the item to be re-orderable.
     return YES;
 }
-*/
+
 
 
 #pragma mark - Navigation
